@@ -1,0 +1,225 @@
+// delete the following line if no text is used
+// edit the line if you wanna use other fonts
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,600,500,400,300);
+
+// * VARIABLES
+$text__color: #fff;
+$bg: #4c4c4c;
+$height: 400px;
+$width: 400px;
+
+$timer__bg: #242424;
+$timer__height: 212px;
+$timer__width: 212px;
+
+$points__height: 188px;
+$points__width: 188px;
+$point__bg: #fff;
+$point__height: 2px;
+$point__width: 2px;
+
+$stroke__circle__color: #f85b5b;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+// use only the available space inside the 400x400 frame
+.frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: $height;
+  width: $width;
+  margin-top: -200px;
+  margin-left: -200px;
+  border-radius: 2px;
+  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: $bg;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 100%;
+  color: $text__color;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.timer {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: $timer__height;
+  width: $timer__width;
+  background-color: $timer__bg;
+  border: 7px solid #3a3a3a;
+  border-radius: 50%;
+}
+
+.points__container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+[class^="points-"] {
+  position: absolute;
+  height: $points__height;
+  width: $points__width;
+  top: calc(#{$height} / 2 - #{$points__height});
+  left: calc(#{$width} / 2 - #{$points__height});
+
+  [class^="point-"] {
+    position: absolute;
+    height: $point__height;
+    width: $point__width;
+    background-color: $point__bg;
+    border-radius: 50%;
+  }
+
+  .point-1 {
+    top: 0;
+    left: calc(#{$points__width} / 2 - (#{$point__width} / 2));
+  }
+
+  .point-2 {
+    top: calc(#{$points__height} / 2 - (#{$point__height} / 2));
+    left: calc(#{$points__width} - (#{$point__width} / 2));
+  }
+
+  .point-3 {
+    top: calc(#{$points__height} - (#{$point__height} / 2));
+    left: calc(#{$points__width} / 2 - (#{$point__width} / 2));
+  }
+
+  .point-4 {
+    top: calc(#{$points__height} / 2 - (#{$point__height} / 2));
+    left: 0;
+  }
+}
+
+@for $i from 2 through 15 {
+  .points-#{$i} {
+    transform: rotateZ((6 * $i - 6) + deg);
+  }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: calc(#{$height} / 2 + #{$point__height});
+  width: calc(#{$width} / 2 + #{$point__width});
+  border-radius: 50%;
+
+  circle {
+    stroke: $stroke__circle__color;
+    stroke-width: 3px;
+    fill: none;
+    stroke-dasharray: 625;
+    transform-origin: center center;
+    transform: rotate(-90deg);
+    animation: spinner 5s linear infinite;
+  }
+}
+
+.inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: calc(#{$points__height} - #{$point__height});
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .date {
+    font-weight: 500;
+  }
+
+  .time {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    margin: 4px 0;
+  }
+
+  .health__information {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .heartrate img {
+      animation: heart_pulse 0.9s ease-in-out infinite;
+    }
+  }
+}
+
+//  * ANIMATIONS
+@keyframes heart_pulse {
+  from {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.2);
+  }
+}
+
+@-webkit-keyframes heart_pulse {
+  from {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.2);
+  }
+}
+
+@-webkit-keyframes spinner {
+  from {
+    stroke-dashoffset: 625;
+    transform: rotate(-90deg) scaleY(1);
+  }
+  50% {
+    stroke-dashoffset: 0;
+    transform: rotate(-90deg) scaleY(1);
+  }
+  50.001% {
+    transform: rotate(-90deg) scaleY(-1);
+  }
+  to {
+    stroke-dashoffset: 625;
+    transform: rotate(-90deg) scaleY(-1);
+  }
+}
+
+@keyframes spinner {
+  from {
+    stroke-dashoffset: 625;
+    transform: rotate(-90deg) scaleY(1);
+  }
+  50% {
+    stroke-dashoffset: 0;
+    transform: rotate(-90deg) scaleY(1);
+  }
+  50.001% {
+    transform: rotate(-90deg) scaleY(-1);
+  }
+  to {
+    stroke-dashoffset: 625;
+    transform: rotate(-90deg) scaleY(-1);
+  }
+}
